@@ -32,4 +32,4 @@ print(max_sum)
 
 # Applied knowledge from Kadane's Algorithm in 1D
 # Learnt from https://youtu.be/-FgseNO-6Gk?si=yattqylwNopJL1kY for 2D
-# Used copilot to check the algorithmagain before submission
+# Used copilot to check the algorithm again before submission
