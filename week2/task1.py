@@ -1,15 +1,19 @@
+# Kaung Khant Lin
+# 6540131
+# 542
+
 x = [] # global list to store the combination
 
 def comb(i):
     
-    # // base case
+    # base case
     if i == n:
         for j in range(len(x)):
             print(x[j], end=' ')
         print()
         return None
     
-    # // recursive case
+    # recursive case
     
     # option 0 (not selected)
     x[i] = 0
