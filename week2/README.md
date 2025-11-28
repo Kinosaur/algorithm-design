@@ -162,3 +162,7 @@ Time: X.XXXXXX seconds
 2. Generating all binary combinations systematically
 3. Applying combinations to optimization problems
 4. Comparing algorithmic approaches (decision array vs. running sum)
+
+## 👤 Author
+
+[Kinosaur](https://github.com/Kinosaur)
