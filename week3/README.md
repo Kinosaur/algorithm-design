@@ -144,7 +144,6 @@ python3 ProblemB_v2.py < cutrodtestcases/1.in
 
 ---
 
-## Author
-Kaung Khant Lin  
-Student ID: 6540131  
-Section: 542
+## 👤 Author
+
+[Kinosaur](https://github.com/Kinosaur)
