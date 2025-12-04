@@ -144,6 +144,12 @@ python3 ProblemB_v2.py < cutrodtestcases/1.in
 
 ---
 
+## Additional Resources
+
+- -
+
+---
+
 ## 👤 Author
 
 [Kinosaur](https://github.com/Kinosaur)
