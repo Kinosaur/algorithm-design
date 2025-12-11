@@ -1,6 +1,6 @@
-# Week 5: Dynamic Programming - Edit Distance
+# Week 5: Dynamic Programming - Edit Distance & Coin Change
 
-## Problem: Minimum Edit Distance
+## Problem A: Minimum Edit Distance
 
 Given two strings A and B, find the minimum number of operations required to transform string A into string B. The allowed operations are:
 1. **Insert** a character
@@ -176,10 +176,68 @@ Time: 0.000013 seconds
 
 ---
 
+## Problem B: Minimum Coin Change (Bottom-Up DP)
+
+A vending machine must give change with the minimum number of coins possible for any currency denomination set, as long as coin valued 1 does not run out.
+
+### Input/Output
+- **Input**: 
+  - Line 1: List of coin denominators
+  - Line 2: Amount of change needed
+- **Output**: Minimum number of coins required
+
+### Example
+```
+Input:
+1 3 4 5
+7
+
+Output:
+Minimum coins needed: 2
+```
+
+### Implementation
+
+#### minimum_coin_DP.py - Bottom-Up Dynamic Programming
+- Iterative approach building solution from smaller to larger amounts
+- Uses DP table where `dp[i]` = minimum coins needed for amount `i`
+- Fills table bottom-up: for each amount, try all coin denominations
+- Time complexity: O(n × C) where n is target amount, C is number of coins
+- Space complexity: O(n) for DP table
+- Much faster than recursive approaches due to no function call overhead
+
+### DP Table Structure
+
+```python
+dp = [float('inf')] * (n + 1)
+dp[0] = 0  # Base case
+
+for amount in range(1, n + 1):
+    for coin in C:
+        if coin <= amount:
+            dp[amount] = min(dp[amount], 1 + dp[amount - coin])
+
+result = dp[n]  # Final answer
+```
+
+### Test Cases
+Uses test cases from [week3/mincointestcases](../week3/mincointestcases/):
+- `mincoin1.in`, `mincoin2.in`, `mincoin3.in`, `mincoin4.in`
+- Various coin denominations and change amounts
+
+### Usage
+```bash
+# Bottom-Up DP
+python3 minimum_coin_DP.py < ../week3/mincointestcases/mincoin1.in
+```
+
+---
+
 ## Additional Resources
 
-- **Worksheet answers**: Will be available in separate document (contains answers to worksheet5.pdf questions)
-- **Performance analysis**: Excel file shows detailed time comparisons
+- **Week5_KaungKhantLin_6540131_542.pdf**: Contains answers to worksheet questions
+- **Performance analysis**: Excel file shows detailed time comparisons for Edit Distance
+- **Test cases**: Extract zip files to access all test cases
 
 ---
 
