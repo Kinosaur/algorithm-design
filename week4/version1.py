@@ -2,6 +2,7 @@
 # 6540131
 # 542
 
+# Version 1: Naive Recursive Brute Force
 import sys
 import time
 sys.setrecursionlimit(10000)
