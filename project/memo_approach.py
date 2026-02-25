@@ -1,64 +1,81 @@
-import sys
+"""
+Memoized Recursive Approach for Weightlifting (Top-Down DP)
+We added a 'notepad' to our naive approach so we don't repeat work!
+"""
 
-# Increase recursion depth just in case, though E=100 usually fits
-sys.setrecursionlimit(2000)
-
-def get_common(exercises, i, j):
+def get_shared_weights(exercises, start_idx, end_idx):
     """
-    Helper to find shared weights. 
-    (Same as before)
+    Helper function (Exactly the same as before).
+    Finds how many weights are shared by all exercises in the range.
     """
-    if i > j:
+    if start_idx > end_idx:
         return 0
-    intersection = list(exercises[i])
-    for k in range(i + 1, j + 1):
-        for w in range(len(intersection)):
-            intersection[w] = min(intersection[w], exercises[k][w])
-    return sum(intersection)
+    shared = list(exercises[start_idx])
+    for i in range(start_idx + 1, end_idx + 1):
+        for weight_type in range(len(shared)):
+            shared[weight_type] = min(shared[weight_type], exercises[i][weight_type])
+    return sum(shared)
 
-def solve_memoized(i, j, exercises, memo):
-    # 1. CHECK NOTEBOOK
-    if (i, j) in memo:
-        return memo[(i, j)]
 
-    # 2. BASE CASE (Same as before)
-    if i == j:
-        result = sum(exercises[i]) * 2
-        memo[(i, j)] = result  # Save it
-        return result
+def solve_memoized(exercises, start_idx, end_idx, notepad):
+    """
+    Our upgraded recursive function. It now carries a 'notepad' (a dictionary).
+    """
+    
+    # --- UPGRADE 1: Check the notepad! ---
+    # We use the tuple (start_idx, end_idx) as the "name" of the chunk.
+    if (start_idx, end_idx) in notepad:
+        # We already did this math! Just hand over the answer.
+        return notepad[(start_idx, end_idx)]
 
-    # 3. RECURSIVE STEP (Same logic)
-    shared_count = get_common(exercises, i, j)
+
+    # BASE CASE (Same as before)
+    if start_idx == end_idx:
+        total_weights_needed = sum(exercises[start_idx])
+        ans = 2 * total_weights_needed
+        
+        # --- UPGRADE 2: Write base case to notepad before returning ---
+        notepad[(start_idx, end_idx)] = ans
+        return ans
+
+    
+    # RECURSIVE STEP (Same logic as before)
+    shared_count = get_shared_weights(exercises, start_idx, end_idx)
     savings = 2 * shared_count
     
-    min_ops = float('inf')
+    best_cost = float('inf')
     
-    for k in range(i, j):
-        # Pass the 'memo' notebook to children
-        left_cost = solve_memoized(i, k, exercises, memo)
-        right_cost = solve_memoized(k + 1, j, exercises, memo)
+    # Try all slices
+    for k in range(start_idx, end_idx):
         
-        total = left_cost + right_cost - savings
+        # Pass the notepad down to the left and right halves!
+        cost_left = solve_memoized(exercises, start_idx, k, notepad)
+        cost_right = solve_memoized(exercises, k + 1, end_idx, notepad)
         
-        if total < min_ops:
-            min_ops = total
+        total_cost = cost_left + cost_right - savings
+        
+        if total_cost < best_cost:
+            best_cost = total_cost
             
-    # 4. SAVE TO NOTEBOOK
-    memo[(i, j)] = min_ops
-    return min_ops
 
-# --- Verification ---
+    # --- UPGRADE 3: Write the final best cost to the notepad! ---
+    notepad[(start_idx, end_idx)] = best_cost
+    
+    return best_cost
+
+
+# --- Let's run it! ---
 if __name__ == "__main__":
-    # Sample Case 1
-    exercises = [[1], [2], [1]]
+    # Test case from Sample 1
+    test_exercises = [[1], [2], [1]]
     
-    # Create an empty notebook
-    memo = {} 
+    # Create an empty dictionary to act as our blank notepad
+    my_notepad = {}
     
-    result = solve_memoized(0, 2, exercises, memo)
-    print(f"Result: {result}")
+    # Call the solver, handing it the blank notepad
+    result = solve_memoized(test_exercises, 0, 2, my_notepad)
     
-    # Just to show you what's inside the 'Notebook':
-    print("\nWhat did we learn (Memo contents)?")
-    for key, val in sorted(memo.items()):
-        print(f"Range {key}: Cost {val}")
+    print(f"Minimum operations needed: {result}") 
+    
+    # If we want to peek at the robot's brain, we can print the notepad!
+    print(f"Look at the notepad: {my_notepad}")

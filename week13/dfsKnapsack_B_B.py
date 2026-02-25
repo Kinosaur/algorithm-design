@@ -26,7 +26,6 @@ item.sort(key=getKey, reverse=True)
 
 maxV = 0
 
-# Step 3
 recursion_count = 0 
 
 # Step 9: The Bounding Function (Pasted from KnapsackBound.py)
@@ -44,11 +43,10 @@ def Bound(i, C):
         j += 1
     return sv
 
-# Step 11: DFS with Best-First Branch & Bound
+# Step 11 & 12: DFS with Best-First Branch & Bound
 def dfs(i, sumW, sumV):
     global maxV, item, N, M, recursion_count
 
-    # Count every recursive call
     recursion_count += 1
 
     # Pruning
@@ -83,4 +81,4 @@ def dfs(i, sumW, sumV):
 
 dfs(0, 0, 0)
 print(maxV)
-print(recursion_count)
+print(recursion_count) # Step 3
