@@ -22,7 +22,7 @@ def solve(t, h):
     if grid[t][h] == 1:
         return False
 
-    # Base Case 3: Reached the last interval successfully!
+    # Base Case 3: Reached the last interval
     if t == T - 1:
         return True
 
